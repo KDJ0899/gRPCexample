@@ -1,0 +1,1 @@
+protoc ex_pb/ex.proto --go_out=plugins=grpc:.
