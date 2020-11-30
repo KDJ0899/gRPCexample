@@ -24,6 +24,40 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+type CalculateRequest_CalculateType int32
+
+const (
+	CalculateRequest_PLUS  CalculateRequest_CalculateType = 0
+	CalculateRequest_MINUS CalculateRequest_CalculateType = 1
+	CalculateRequest_MUL   CalculateRequest_CalculateType = 2
+	CalculateRequest_DIV   CalculateRequest_CalculateType = 3
+)
+
+var CalculateRequest_CalculateType_name = map[int32]string{
+	0: "PLUS",
+	1: "MINUS",
+	2: "MUL",
+	3: "DIV",
+}
+
+var CalculateRequest_CalculateType_value = map[string]int32{
+	"PLUS":  0,
+	"MINUS": 1,
+	"MUL":   2,
+	"DIV":   3,
+}
+
+func (x CalculateRequest_CalculateType) String() string {
+	return proto.EnumName(CalculateRequest_CalculateType_name, int32(x))
+}
+
+func (CalculateRequest_CalculateType) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_ee0b8fde9a872ff2, []int{2, 0}
+}
+
+//  message의 각 필드에는 번호가 할당.
+//이 필드 번호는 Message가 이진 형식으로
+//직렬화 될때 필드를 식별하는데 사용.
 type HiRequest struct {
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -102,24 +136,113 @@ func (m *HiReply) GetMessge() string {
 	return ""
 }
 
+type CalculateRequest struct {
+	Numbers              []int64  `protobuf:"varint,1,rep,packed,name=numbers,proto3" json:"numbers,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CalculateRequest) Reset()         { *m = CalculateRequest{} }
+func (m *CalculateRequest) String() string { return proto.CompactTextString(m) }
+func (*CalculateRequest) ProtoMessage()    {}
+func (*CalculateRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ee0b8fde9a872ff2, []int{2}
+}
+
+func (m *CalculateRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CalculateRequest.Unmarshal(m, b)
+}
+func (m *CalculateRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CalculateRequest.Marshal(b, m, deterministic)
+}
+func (m *CalculateRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CalculateRequest.Merge(m, src)
+}
+func (m *CalculateRequest) XXX_Size() int {
+	return xxx_messageInfo_CalculateRequest.Size(m)
+}
+func (m *CalculateRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_CalculateRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CalculateRequest proto.InternalMessageInfo
+
+func (m *CalculateRequest) GetNumbers() []int64 {
+	if m != nil {
+		return m.Numbers
+	}
+	return nil
+}
+
+type CalculateResponse struct {
+	Result               int64    `protobuf:"varint,1,opt,name=result,proto3" json:"result,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *CalculateResponse) Reset()         { *m = CalculateResponse{} }
+func (m *CalculateResponse) String() string { return proto.CompactTextString(m) }
+func (*CalculateResponse) ProtoMessage()    {}
+func (*CalculateResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_ee0b8fde9a872ff2, []int{3}
+}
+
+func (m *CalculateResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CalculateResponse.Unmarshal(m, b)
+}
+func (m *CalculateResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CalculateResponse.Marshal(b, m, deterministic)
+}
+func (m *CalculateResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CalculateResponse.Merge(m, src)
+}
+func (m *CalculateResponse) XXX_Size() int {
+	return xxx_messageInfo_CalculateResponse.Size(m)
+}
+func (m *CalculateResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_CalculateResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_CalculateResponse proto.InternalMessageInfo
+
+func (m *CalculateResponse) GetResult() int64 {
+	if m != nil {
+		return m.Result
+	}
+	return 0
+}
+
 func init() {
+	proto.RegisterEnum("grpcexample.CalculateRequest_CalculateType", CalculateRequest_CalculateType_name, CalculateRequest_CalculateType_value)
 	proto.RegisterType((*HiRequest)(nil), "grpcexample.HiRequest")
 	proto.RegisterType((*HiReply)(nil), "grpcexample.HiReply")
+	proto.RegisterType((*CalculateRequest)(nil), "grpcexample.CalculateRequest")
+	proto.RegisterType((*CalculateResponse)(nil), "grpcexample.CalculateResponse")
 }
 
 func init() { proto.RegisterFile("ex_pb/ex.proto", fileDescriptor_ee0b8fde9a872ff2) }
 
 var fileDescriptor_ee0b8fde9a872ff2 = []byte{
-	// 142 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x4b, 0xad, 0x88, 0x2f,
-	0x48, 0xd2, 0x4f, 0xad, 0xd0, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x4e, 0x2f, 0x2a, 0x48,
-	0x4e, 0xad, 0x48, 0xcc, 0x2d, 0xc8, 0x49, 0x55, 0x92, 0xe7, 0xe2, 0xf4, 0xc8, 0x0c, 0x4a, 0x2d,
-	0x2c, 0x4d, 0x2d, 0x2e, 0x11, 0x12, 0xe2, 0x62, 0xc9, 0x4b, 0xcc, 0x4d, 0x95, 0x60, 0x54, 0x60,
-	0xd4, 0xe0, 0x0c, 0x02, 0xb3, 0x95, 0x14, 0xb9, 0xd8, 0x41, 0x0a, 0x0a, 0x72, 0x2a, 0x85, 0xc4,
-	0xb8, 0xd8, 0x72, 0x53, 0x8b, 0x8b, 0xd3, 0x61, 0x0a, 0xa0, 0x3c, 0x23, 0x5b, 0x2e, 0x26, 0x8f,
-	0x4c, 0x21, 0x73, 0x2e, 0xd6, 0xe0, 0xc4, 0x4a, 0x8f, 0x4c, 0x21, 0x31, 0x3d, 0x24, 0x0b, 0xf4,
-	0xe0, 0xa6, 0x4b, 0x89, 0x60, 0x88, 0x17, 0xe4, 0x54, 0x2a, 0x31, 0x24, 0xb1, 0x81, 0x9d, 0x65,
-	0x0c, 0x08, 0x00, 0x00, 0xff, 0xff, 0xf5, 0xaf, 0xaa, 0xce, 0xa8, 0x00, 0x00, 0x00,
+	// 270 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x74, 0x91, 0xd1, 0x4b, 0x83, 0x50,
+	0x14, 0xc6, 0x75, 0x6e, 0x33, 0x4f, 0x14, 0x76, 0x88, 0x21, 0x83, 0x6a, 0xdd, 0xa7, 0x41, 0x60,
+	0xb0, 0xa0, 0x9e, 0x7a, 0xaa, 0x07, 0x07, 0x2e, 0x42, 0x33, 0xe8, 0x29, 0x74, 0x1d, 0x86, 0x70,
+	0xd5, 0x9b, 0x57, 0x41, 0xff, 0xfb, 0xd0, 0xa6, 0x58, 0xd1, 0xdb, 0xf9, 0xdd, 0xfb, 0xdd, 0xfb,
+	0x7d, 0x1f, 0x07, 0x8e, 0xa9, 0x7a, 0x17, 0xd1, 0x35, 0x55, 0xb6, 0xc8, 0xb3, 0x22, 0xc3, 0xc3,
+	0x5d, 0x2e, 0xb6, 0x54, 0x85, 0x89, 0xe0, 0xc4, 0x2e, 0xc0, 0x70, 0x62, 0x8f, 0x3e, 0x4b, 0x92,
+	0x05, 0x22, 0x8c, 0xd3, 0x30, 0x21, 0x4b, 0x5d, 0xa8, 0x4b, 0xc3, 0x6b, 0x67, 0x76, 0x09, 0x7a,
+	0x23, 0x10, 0xbc, 0xc6, 0x19, 0x4c, 0x13, 0x92, 0x72, 0xd7, 0x09, 0xf6, 0xc4, 0x3e, 0xc0, 0x7c,
+	0x08, 0xf9, 0xb6, 0xe4, 0x61, 0x41, 0xdd, 0x57, 0x16, 0xe8, 0x69, 0x99, 0x44, 0x94, 0x4b, 0x4b,
+	0x5d, 0x68, 0x4b, 0xcd, 0xeb, 0x90, 0xdd, 0xc2, 0x51, 0xaf, 0x7e, 0xa9, 0x05, 0xe1, 0x01, 0x8c,
+	0x9f, 0xdd, 0xc0, 0x37, 0x15, 0x34, 0x60, 0xb2, 0x59, 0x3f, 0x05, 0xbe, 0xa9, 0xa2, 0x0e, 0xda,
+	0x26, 0x70, 0xcd, 0x51, 0x33, 0x3c, 0xae, 0x5f, 0x4d, 0x8d, 0x5d, 0xc1, 0xc9, 0xc0, 0x45, 0x8a,
+	0x2c, 0x95, 0xd4, 0x44, 0xca, 0x49, 0x96, 0xbc, 0x68, 0x23, 0x69, 0xde, 0x9e, 0x56, 0xf7, 0x30,
+	0x72, 0x62, 0xbc, 0x83, 0x89, 0x1f, 0xd6, 0x4e, 0x8c, 0x33, 0x7b, 0xd0, 0xd9, 0xee, 0x0b, 0xcf,
+	0x4f, 0xff, 0x9c, 0x0b, 0x5e, 0x33, 0x65, 0xf5, 0x06, 0x46, 0xef, 0x85, 0xee, 0x10, 0xce, 0x7e,
+	0xbc, 0xf8, 0x5d, 0x7b, 0x7e, 0xfe, 0xdf, 0xf5, 0x77, 0x5e, 0xa6, 0x44, 0xd3, 0x76, 0x09, 0x37,
+	0x5f, 0x01, 0x00, 0x00, 0xff, 0xff, 0xa5, 0xaa, 0xaa, 0x9e, 0x96, 0x01, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -196,6 +319,78 @@ var _Hi_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SayHi",
 			Handler:    _Hi_SayHi_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "ex_pb/ex.proto",
+}
+
+// CalculateClient is the client API for Calculate service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type CalculateClient interface {
+	Calculate(ctx context.Context, in *CalculateRequest, opts ...grpc.CallOption) (*CalculateResponse, error)
+}
+
+type calculateClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewCalculateClient(cc *grpc.ClientConn) CalculateClient {
+	return &calculateClient{cc}
+}
+
+func (c *calculateClient) Calculate(ctx context.Context, in *CalculateRequest, opts ...grpc.CallOption) (*CalculateResponse, error) {
+	out := new(CalculateResponse)
+	err := c.cc.Invoke(ctx, "/grpcexample.Calculate/Calculate", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// CalculateServer is the server API for Calculate service.
+type CalculateServer interface {
+	Calculate(context.Context, *CalculateRequest) (*CalculateResponse, error)
+}
+
+// UnimplementedCalculateServer can be embedded to have forward compatible implementations.
+type UnimplementedCalculateServer struct {
+}
+
+func (*UnimplementedCalculateServer) Calculate(ctx context.Context, req *CalculateRequest) (*CalculateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Calculate not implemented")
+}
+
+func RegisterCalculateServer(s *grpc.Server, srv CalculateServer) {
+	s.RegisterService(&_Calculate_serviceDesc, srv)
+}
+
+func _Calculate_Calculate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CalculateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CalculateServer).Calculate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/grpcexample.Calculate/Calculate",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CalculateServer).Calculate(ctx, req.(*CalculateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _Calculate_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "grpcexample.Calculate",
+	HandlerType: (*CalculateServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "Calculate",
+			Handler:    _Calculate_Calculate_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

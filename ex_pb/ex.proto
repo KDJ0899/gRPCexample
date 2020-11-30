@@ -2,14 +2,40 @@ syntax = "proto3";
 
 package grpcexample;
 
+
+
 service Hi {
     rpc SayHi (HiRequest) returns (HiReply){}
 }
 
+service Calculate{
+    rpc Calculate (CalculateRequest) returns (CalculateResponse){}
+}
+
+
+/*  message의 각 필드에는 번호가 할당.
+    이 필드 번호는 Message가 이진 형식으로 
+    직렬화 될때 필드를 식별하는데 사용.
+*/
 message HiRequest{
     string name = 1;
 }
 
 message HiReply{
     string messge = 1;
+}
+
+
+message CalculateRequest{
+    repeated int64 numbers = 1;
+    enum CalculateType{
+        PLUS = 0;
+        MINUS = 1;
+        MUL = 2;
+        DIV = 3;
+    }
+}
+
+message CalculateResponse{
+    int64 result = 1;
 }
