@@ -28,7 +28,9 @@ message HiReply{
 
 message CalculateRequest{
     repeated int64 numbers = 1;
-    enum CalculateType{
+    Operator operator = 2;
+    
+    enum Operator{
         PLUS = 0;
         MINUS = 1;
         MUL = 2;
