@@ -11,7 +11,9 @@ import (
 
 const defaultName = "dongjin"
 
-func connectHiServer(ctx context.Context, conn *grpc.ClientConn) error {
+type hi struct{}
+
+func (*hi) connectServer(ctx context.Context, conn *grpc.ClientConn) error {
 	c := pb.NewHiClient(conn)
 
 	name := defaultName

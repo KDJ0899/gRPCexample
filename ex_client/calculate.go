@@ -15,7 +15,9 @@ const (
 	divide = pb.CalculateRequest_DIV
 )
 
-func connectCaculateServer(ctx context.Context, conn *grpc.ClientConn) error {
+type calculate struct{}
+
+func (*calculate) connectServer(ctx context.Context, conn *grpc.ClientConn) error {
 	c := pb.NewCalculateClient(conn)
 	numbers := []int64{1, 2, 4}
 
