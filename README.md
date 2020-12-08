@@ -20,4 +20,4 @@
  
  ## Library
  
- [Viper](https://github.com/spf13/viper)  환경변수 사용.
+ [Viper](https://github.com/spf13/viper) - 환경변수 사용.
