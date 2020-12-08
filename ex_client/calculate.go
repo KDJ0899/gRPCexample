@@ -8,6 +8,13 @@ import (
 	"google.golang.org/grpc"
 )
 
+const (
+	plus   = pb.CalculateRequest_PLUS
+	minus  = pb.CalculateRequest_MINUS
+	multi  = pb.CalculateRequest_MUL
+	divide = pb.CalculateRequest_DIV
+)
+
 func connectCaculateServer(ctx context.Context, conn *grpc.ClientConn) error {
 	c := pb.NewCalculateClient(conn)
 	numbers := []int64{1, 2, 4}

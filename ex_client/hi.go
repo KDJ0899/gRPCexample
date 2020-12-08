@@ -9,10 +9,13 @@ import (
 	"google.golang.org/grpc"
 )
 
+const defaultName = "dongjin"
+
 func connectHiServer(ctx context.Context, conn *grpc.ClientConn) error {
 	c := pb.NewHiClient(conn)
 
 	name := defaultName
+
 	if len(os.Args) > 1 {
 		name = os.Args[1]
 	}

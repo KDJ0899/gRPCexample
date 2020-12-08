@@ -5,18 +5,11 @@ import (
 	"log"
 	"time"
 
-	pb "github.com/KDJ0899/gRPCexample/ex_pb"
 	"google.golang.org/grpc"
 )
 
 const (
-	address     = "localhost:50051"
-	defaultName = "dongjin"
-
-	plus   = pb.CalculateRequest_PLUS
-	minus  = pb.CalculateRequest_MINUS
-	multi  = pb.CalculateRequest_MUL
-	divide = pb.CalculateRequest_DIV
+	address = "localhost:50051"
 )
 
 func main() {
