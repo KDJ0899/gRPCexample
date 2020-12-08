@@ -2,17 +2,28 @@ package main
 
 import (
 	"context"
+	"gRPCexample/ex_client/config"
 	"log"
 	"time"
 
 	"google.golang.org/grpc"
 )
 
-const (
-	address = "localhost:50051"
+var (
+	clients = map[string]client{
+		"hi":        &hi{},
+		"calculate": &calculate{},
+	}
 )
 
+type client interface {
+	connectServer(context.Context, *grpc.ClientConn) error
+}
+
 func main() {
+	config.Init()
+	address := config.GetServerAddress() + ":" + config.GetPort()
+
 	conn, err := grpc.Dial(address, grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
@@ -22,7 +33,8 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 
-	if err := connectCaculateServer(ctx, conn); err != nil {
+	log.Printf("Try Connect %s Server", config.GetClientType())
+	if err := clients[config.GetClientType()].connectServer(ctx, conn); err != nil {
 		log.Fatalf("Error: %v", err)
 	}
 }

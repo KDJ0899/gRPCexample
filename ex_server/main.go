@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"gRPCexample/ex_server/calculate"
+	"gRPCexample/ex_server/config"
 	"gRPCexample/ex_server/hi"
 	"log"
 	"net"
@@ -10,32 +12,33 @@ import (
 	"google.golang.org/grpc"
 )
 
-const (
-	port = ":50051"
-
-	Hi = iota
-	Caculate
-)
-
-// server is used to implement helloworld.GreeterServer.
-
 func main() {
+	config.Init()
 
-	lis, err := net.Listen("tcp", port)
+	lis, err := net.Listen("tcp", config.GetPort())
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
+
 	s := grpc.NewServer()
-	connectServer(s, Caculate)
+	if err := connectServer(s, config.GetServerType()); err != nil {
+		log.Fatalf("failed connect server: %v", err)
+	}
+
+	log.Printf("Start %s Server", config.GetServerType())
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
+
 }
 
-func connectServer(s *grpc.Server, srvType int) {
-	if srvType == Hi {
+func connectServer(s *grpc.Server, srvType string) error {
+	if srvType == "hi" {
 		pb.RegisterHiServer(s, &hi.Server{})
-	} else if srvType == Caculate {
+	} else if srvType == "calculate" {
 		pb.RegisterCalculateServer(s, &calculate.Server{})
+	} else {
+		return fmt.Errorf("\"%s\" server is not exist", srvType)
 	}
+	return nil
 }
